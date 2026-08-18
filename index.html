@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HFF4X Panel - Mira perfecta al alcance de tu mano</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/notiflix-aio-2.6.0.min.js"></script>
+  <link rel="stylesheet" href="css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <style>
+    html, body {
+      touch-action: pan-x pan-y;
+      -ms-touch-action: pan-x pan-y; /* IE/Edge antigo */
+      overscroll-behavior: none;
+    }
+  </style>
+
+  <!-- Tema AMARELO + Overrides de "vermelho" -->
+  <style>
+    :root { --brand-yellow: #FFDE09; }
+
+    /* Botões/CTAs */
+    .btn-brand{
+      background: var(--brand-yellow) !important;
+      color:#000 !important;
+      font-weight:700;
+      box-shadow: 0 10px 26px rgba(255,222,9,.25) !important;
+      transition: transform .2s, filter .2s !important;
+    }
+    .btn-brand:hover{ filter: brightness(1.08); transform: translateY(-1px); }
+
+    /* Utilitários de marca */
+    .text-brand{ color: var(--brand-yellow) !important; }
+    .bg-brand{ background: var(--brand-yellow) !important; }
+    .border-brand{ border-color: var(--brand-yellow) !important; }
+    .ring-brand{ border-color: var(--brand-yellow) !important; }
+    .label-brand{ color: var(--brand-yellow) !important; }
+    .shadow-brand{ box-shadow: 0 0 0 2px rgba(255,222,9,.25), 0 25px 40px rgba(0,0,0,.35) !important; }
+    .accent-brand{ accent-color: var(--brand-yellow) !important; }
+    .focus-ring-brand:focus{ outline:0 !important; box-shadow: 0 0 0 2px rgba(255,222,9,.45) !important; }
+
+    /* Substitui qualquer vermelho padrão por amarelo (usado pelo JS/HTML antigo) */
+    .text-red-500,.text-red-400,.text-red-300,
+    .bg-red-600,.bg-red-700,.bg-red-900\/20,
+    .border-red-500,.border-red-500\/30,.border-red-500\/50,
+    .hover\:bg-red-600:hover,.hover\:bg-red-700:hover,
+    .shadow-red-500\/20,.hover\:shadow-red-500\/30:hover{
+      color: var(--brand-yellow) !important;
+      border-color: var(--brand-yellow) !important;
+      background-color: rgba(255,222,9,.10) !important;
+      box-shadow: 0 10px 26px rgba(255,222,9,.25) !important;
+    }
+    /* Gradientes que tinham vermelho */
+    .from-yellow-500.to-red-500{ background-image: linear-gradient(to right, rgb(234 179 8), rgb(202 138 4)) !important; }
+    /* Carrossel dots */
+    #carousel-dots button{ width:10px;height:10px;border-radius:999px;border:none;background:#333; }
+    #carousel-dots button.active{ background: var(--brand-yellow) !important; }
+
+    /* Setas do carrossel */
+    #prev-slide:hover,#next-slide:hover{ background: var(--brand-yellow) !important; color:#000 !important; }
+
+    /* Notiflix em amarelo */
+    .notiflix-notify{ background:#0a0a0a !important; color:#e5e7eb !important; border-left:4px solid var(--brand-yellow) !important; box-shadow:0 0 20px rgba(255,222,9,.25) !important; border-radius:8px !important; }
+    .notiflix-notify-message strong{ color: var(--brand-yellow) !important; }
+
+    /* Switches/toggles que eram vermelhos */
+    .switch-bg:checked{ background-color: var(--brand-yellow) !important; }
+    .switch-bg:checked + .switch-label{ background-color: var(--brand-yellow) !important; }
+    .phone-screen .custom-scrollbar::-webkit-scrollbar-thumb{ background: var(--brand-yellow) !important; }
+
+    /* Animações que tinham glow vermelho -> amarelo */
+    @keyframes pulse-attention {
+      0%{ transform:scale(1); box-shadow:0 0 0 0 rgba(255,222,9,.7); }
+      70%{ transform:scale(1.05); box-shadow:0 0 10px 15px rgba(255,222,9,0); }
+      100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(255,222,9,0); }
+    }
+    .pulse-attention{ animation: pulse-attention 2s infinite !important; }
+
+    @keyframes pulse-glow {
+      0%,100%{ box-shadow:0 0 20px rgba(255,222,9,.4), 0 0 0px 3px rgba(255,222,9,.6); }
+      50%{ box-shadow:0 0 40px rgba(255,222,9,.6), 0 0 0px 3px rgba(255,222,9,.6); }
+    }
+    .pulse-glow{ animation: pulse-glow 2s infinite !important; }
+
+    /* FAQ específico: se JS ainda usar classes "red", forçamos amarelo */
+    #faq-container .border-red-500,
+    #faq-container .border-red-500\/30,
+    #faq-container .border-red-500\/50,
+    #faq-container .bg-red-900\/20{ border-color: var(--brand-yellow) !important; background-color: rgba(255,222,9,.10) !important; }
+    #faq-container .text-red-500{ color: var(--brand-yellow) !important; }
+  </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1059470159233925');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1059470159233925&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+
+<body class="bg-black text-gray-200">
+  <main>
+
+    <!-- HERO -->
+    <section class="relative flex items-start justify-center pt-16 sm:pt-18 lg:pt-20 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black min-h-screen">
+      <div class="absolute inset-0 z-0">
+        <img src="images/iaMeAb7.jpeg" alt="Fondo con personaje de Free Fire"
+             class="w-full h-full object-cover opacity-30 ken-burns">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+      </div>
+
+      <div class="relative max-w-5xl mx-auto text-center z-10">
+
+        <!-- BLOCO DO TÍTULO — SOMENTE DESCE ELE -->
+        <div style="margin-top: 45px;">
+          <h1 class="font-teko uppercase font-bold leading-tight text-4xl sm:text-5xl md:text-6xl text-white drop-shadow-lg">
+            <span class="block">FFH4X PANEL</span>
+            <span class="block text-[#17c21d]">PANEL OFICIAL DE LOS PROS</span>
+          </h1>
+
+          <p class="text-xs sm:text-sm md:text-base text-gray-300 mt-3 mb-6 max-w-md mx-auto">
+            Consigue ahora el panel que usan los pros, totalmente optimizado para Free Fire.
+          </p>
+        </div>
+
+        <!-- 🔥 VÍDEO (ANTES DO BOTÃO) -->
+        <div class="elementor-element elementor-element-50c0a598 elementor-widget elementor-widget-html"
+             data-id="50c0a598" data-element_type="widget" data-widget_type="html.default">
+          <div class="elementor-widget-container">
+
+            <!-- ⬇️ Diminuí um pouco aqui com max-width -->
+            <div class="vsl-wrap" style="max-width:340px;margin:0 auto;">
+              <div style="position:relative;padding-top:178.21782178217822%;">
+                <iframe
+                  id="panda-be40d276-e77b-4d59-b52e-5a2b236e3b5a"
+                  src="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/?v=be40d276-e77b-4d59-b52e-5a2b236e3b5a"
+                  style="border:none;position:absolute;top:0;left:0;width:100%;height:100%;"
+                  allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
+                  allowfullscreen="true"
+                  fetchpriority="high">
+                </iframe>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- 🔥 FIM DO VÍDEO -->
+
+        <!-- BENEFÍCIOS (IMAGEM ÚNICA) -->
+        <div style="
+          width:100%; 
+          text-align:center; 
+          margin-top:6px;   /* MAIS PERTO DO VÍDEO */
+          margin-bottom:18px;
+          position:relative;
+        ">
+          <img src="images/Design sem nome (38).png"
+               alt="Beneficios"
+               style="
+                 width:260px;              /* MENOR */
+                 max-width:85%; 
+                 display:block;
+                 margin:0 auto;
+                 transform:translateX(12px);  /* MAIS PARA A DIREITA */
+               ">
+        </div>
+
+        <!-- BOTÃO -->
+        <a href="#interactive-panel"
+           class="inline-block btn-brand btn-hero-adjusted rounded-md">
+          VER CÓMO FUNCIONA
+        </a>
+
+      </div>
+    </section>
+
+    <!-- PAINEL INTERATIVO -->
+    <section id="interactive-panel" class="flex flex-col items-center justify-center pt-2 pb-16 sm:pt-4 sm:pb-20 px-4 sm:px-6 lg:px-8 bg-black">
+      <div class="text-center mb-8 max-w-3xl mx-auto reveal">
+        <h2 class="font-teko text-4xl sm:text-5xl md:text-6xl font-bold text-white uppercase">
+          Control total en la palma de tu mano
+        </h2>
+        <p class="text-lg text-gray-400 mt-2">
+          ¡Demuestra que eres un crack! Completa la <span class="font-bold text-white">Jornada Capudo</span> y desbloquea una
+          <span class="font-bold text-brand">oferta secreta</span> solo para ti.
+        </p>
+      </div>
+
+      <div id="gamification-progress" class="w-full max-w-4xl mx-auto mb-6 reveal">
+        <div class="flex justify-between items-center mb-2">
+          <p class="font-teko text-xl text-yellow-400 uppercase tracking-wider">Jornada Capudo</p>
+          <p id="progress-text" class="font-bold text-lg text-white">0%</p>
+        </div>
+        <div class="w-full bg-gray-800 rounded-full h-4 border border-gray-700">
+          <div id="progress-bar" class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full progress-bar-inner" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="w-full max-w-4xl mx-auto mb-8 reveal text-center">
+        <p class="text-gray-400 mb-4">Para desbloquear tu recompensa, completa las misiones:</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+          <div id="task-1" class="flex items-center gap-2 text-gray-500 transition-colors duration-300">
+            <i class="far fa-circle-check"></i><span class="font-semibold text-sm">1. Activar el Panel</span>
+          </div>
+          <div id="task-2" class="flex items-center gap-2 text-gray-500 transition-colors duration-300">
+            <i class="far fa-circle-check"></i><span class="font-semibold text-sm">2. Probar 3 funciones de mira</span>
+          </div>
+          <div id="task-3" class="flex items-center gap-2 text-gray-500 transition-colors duration-300">
+            <i class="far fa-circle-check"></i><span class="font-semibold text-sm">3. Aplicar las optimizaciones</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-4xl reveal">
+        <!-- Mock do app -->
+        <div id="phone-container" class="phone-frame">
+          <div class="phone-screen font-poppins">
+            <div id="app-dashboard-screen" class="absolute inset-0 p-6 flex flex-col overflow-hidden custom-scrollbar opacity-100 transition-opacity duration-500">
+              <header class="flex justify-between items-center flex-shrink-0">
+                <img src="images/Design sem nome (46).png" alt="Super Sensi Logo" class="h-8">
+                <div class="w-10 h-10 bg-[#1E1E1E] rounded-xl flex items-center justify-center"><i class="fa-solid fa-ellipsis-vertical text-gray-400"></i></div>
+              </header>
+
+              <div class="text-center my-6 flex-shrink-0">
+                <button id="app-main-toggle-btn" class="relative w-32 h-32 rounded-full flex items-center justify-center mx-auto cursor-pointer pulse-attention">
+                  <div class="absolute inset-0 rounded-full border-2 ring-brand"></div>
+                  <div class="w-[90%] h-[90%] bg-gray-800 rounded-full flex items-center justify-center transition-colors duration-300">
+                    <span class="font-teko text-5xl label-brand transition-colors duration-300">OFF</span>
+                  </div>
+                </button>
+              </div>
+
+              <div id="status-indicators" class="my-4 grid grid-cols-3 gap-4 text-center transition-opacity duration-500 opacity-50 flex-shrink-0">
+                <div><p data-stat="latency" class="font-teko text-3xl text-gray-500 transition-colors">--</p><p class="text-xs text-gray-400">Ping</p></div>
+                <div><p data-stat="fps" class="font-teko text-3xl text-gray-500 transition-colors">--</p><p class="text-xs text-gray-400">FPS Estable</p></div>
+                <div><p data-stat="precision" class="font-teko text-3xl text-gray-500 transition-colors">+0%</p><p class="text-xs text-gray-400">Tasa HS</p></div>
+              </div>
+
+              <div id="quick-functions" class="flex-grow space-y-3 transition-opacity duration-500 opacity-50 pointer-events-none">
+                <h3 class="font-teko text-xl text-gray-400 tracking-wide">Funciones rápidas</h3>
+
+                <div class="bg-gray-800/50 p-3 rounded-lg flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-arrows-to-dot text-brand"></i>
+                    <span class="text-sm font-semibold">Sticky Aim</span>
+                  </div>
+                  <div class="relative inline-block w-10 align-middle">
+                    <input type="checkbox" data-sync="switch-aim-1" id="quick-switch-1" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="quick-switch-1" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </div>
+
+                <div class="bg-gray-800/50 p-3 rounded-lg flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-water text-brand"></i>
+                    <span class="text-sm font-semibold">Solo headshots / Anti-body</span>
+                  </div>
+                  <div class="relative inline-block w-10 align-middle">
+                    <input type="checkbox" data-sync="switch-aim-6" id="quick-switch-2" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="quick-switch-2" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </div>
+
+                <div class="bg-gray-800/50 p-3 rounded-lg flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-bolt text-brand"></i>
+                    <span class="text-sm font-semibold">FPS Máximo</span>
+                  </div>
+                  <div class="relative inline-block w-10 align-middle">
+                    <input type="checkbox" data-sync="switch-opt-3" id="quick-switch-3" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="quick-switch-3" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </div>
+              </div>
+
+              <footer class="text-center text-gray-600 text-xs font-semibold tracking-wider mt-auto flex-shrink-0">@Supersensi.gg</footer>
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel flutuante -->
+        <div id="app-floating-panel" class="hidden w-full max-w-sm bg-[#1E1E1E] rounded-2xl shadow-2xl z-50 overflow-hidden">
+          <div class="flex h-96">
+            <nav class="w-16 bg-black/20 flex flex-col items-center py-2 space-y-2">
+              <div class="w-12 h-12 flex items-center justify-center text-gray-400"><i class="fa-solid fa-power-off"></i></div>
+              <div class="w-full h-px bg-gray-700"></div>
+              <button class="app-nav-button active w-12 h-12 flex items-center justify-center text-gray-400" data-page="app-page-settings"><i class="fa-solid fa-cog"></i></button>
+              <button class="app-nav-button w-12 h-12 flex items-center justify-center text-gray-400" data-page="app-page-sensitivity"><i class="fa-solid fa-sliders"></i></button>
+              <button class="app-nav-button w-12 h-12 flex items-center justify-center text-gray-400" data-page="app-page-aim"><i class="fa-solid fa-crosshairs"></i></button>
+              <button class="app-nav-button w-12 h-12 flex items-center justify-center text-gray-400" data-page="app-page-optimization"><i class="fa-solid fa-bolt"></i></button>
+              <button class="app-nav-button w-12 h-12 flex items-center justify-center text-gray-400" data-page="app-page-ia"><i class="fa-solid fa-brain"></i></button>
+            </nav>
+
+            <div class="flex-1 p-4 overflow-y-auto custom-scrollbar">
+              <!-- Settings -->
+              <div id="app-page-settings" class="app-panel-page">
+                <h2 class="font-teko text-2xl">Super Sensi <span class="bg-brand text-black text-xs p-1 rounded">v2.0</span></h2>
+                <p class="text-xs text-gray-400 mb-4">Panel de control</p>
+
+                <div class="clickable-function flex items-center gap-3 mb-4 p-2 rounded-lg cursor-pointer">
+                  <div class="w-10 h-10 bg-black/20 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-ghost text-brand"></i>
+                  </div>
+                  <p class="flex-1 text-sm font-bold">Icono flotante</p>
+                  <div class="relative inline-block w-10 align-middle">
+                    <input type="checkbox" checked id="switch-1" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="switch-1" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </div>
+
+                <div class="clickable-function flex items-center gap-3 mb-4 p-2 rounded-lg cursor-pointer">
+                  <div class="w-10 h-10 bg-black/20 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-bell text-brand"></i>
+                  </div>
+                  <p class="flex-1 text-sm font-bold">Notificaciones dentro del juego</p>
+                  <div class="relative inline-block w-10 align-middle">
+                    <input type="checkbox" id="switch-2" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                    <label for="switch-2" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                  </div>
+                </div>
+
+                <p class="text-sm mt-4 mb-1">Opacidad del panel</p>
+                <input type="range" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand">
+              </div>
+
+              <!-- Sensibilidade -->
+              <div id="app-page-sensitivity" class="app-panel-page hidden">
+                <h2 class="bg-brand text-black inline-block text-sm font-bold p-2 rounded-lg mb-4">Sensibilidad</h2>
+
+                <div class="space-y-3">
+                  <div class="bg-black/20 p-2 rounded-lg">
+                    <div class="flex items-center gap-2 mb-1">
+                      <i class="fa-solid fa-crosshairs w-8 text-center text-gray-400"></i>
+                      <p class="flex-1 text-sm">General</p>
+                      <p class="text-sm text-brand font-bold" data-sensi-value>100</p>
+                    </div>
+                    <input type="range" value="100" min="0" max="200" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand sensi-slider">
+                  </div>
+
+                  <div class="bg-black/20 p-2 rounded-lg">
+                    <div class="flex items-center gap-2 mb-1">
+                      <i class="fa-solid fa-circle-dot w-8 text-center text-gray-400"></i>
+                      <p class="flex-1 text-sm">Punto rojo</p>
+                      <p class="text-sm text-brand font-bold" data-sensi-value>95</p>
+                    </div>
+                    <input type="range" value="95" min="0" max="200" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand sensi-slider">
+                  </div>
+
+                  <div class="bg-black/20 p-2 rounded-lg">
+                    <div class="flex items-center gap-2 mb-1">
+                      <i class="fa-solid fa-2 w-8 text-center text-gray-400"></i>
+                      <p class="flex-1 text-sm">Mira 2x</p>
+                      <p class="text-sm text-brand font-bold" data-sensi-value>90</p>
+                    </div>
+                    <input type="range" value="90" min="0" max="200" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand sensi-slider">
+                  </div>
+
+                  <div class="bg-black/20 p-2 rounded-lg">
+                    <div class="flex items-center gap-2 mb-1">
+                      <i class="fa-solid fa-4 w-8 text-center text-gray-400"></i>
+                      <p class="flex-1 text-sm">Mira 4x</p>
+                      <p class="text-sm text-brand font-bold" data-sensi-value>85</p>
+                    </div>
+                    <input type="range" value="85" min="0" max="200" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand sensi-slider">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Funções de Mira -->
+              <div id="app-page-aim" class="app-panel-page hidden">
+                <h2 class="bg-brand text-black inline-block text-sm font-bold p-2 rounded-lg mb-4">Funciones de mira</h2>
+
+                <div class="space-y-3">
+                  <div class="clickable-function flex items-center p-2 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-arrows-to-dot w-6 text-center text-gray-400"></i>
+                    <p class="flex-1 text-sm ml-2">Sticky Aim</p>
+                    <div class="relative inline-block w-10 align-middle">
+                      <input type="checkbox" data-sync="quick-switch-1" data-gamify-task="aim" data-effect="precision" data-value="25" id="switch-aim-1" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                      <label for="switch-aim-1" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function flex items-center p-2 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-bullseye w-6 text-center text-gray-400"></i>
+                    <p class="flex-1 text-sm ml-2">Mira bloqueada</p>
+                    <div class="relative inline-block w-10 align-middle">
+                      <input type="checkbox" data-gamify-task="aim" data-effect="precision" data-value="20" id="switch-aim-2" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                      <label for="switch-aim-2" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function flex items-center p-2 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-user-shield w-6 text-center text-gray-400"></i>
+                    <p class="flex-1 text-sm ml-2">Anti-flinch
+                      <input type="checkbox" data-gamify-task="aim" data-effect="precision" data-value="15" id="switch-aim-3" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                      <label for="switch-aim-3" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                    </p>
+                  </div>
+
+                  <div class="clickable-function flex items-center p-2 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-expand w-6 text-center text-gray-400"></i>
+                    <p class="flex-1 text-sm ml-2">FOV de mira</p>
+                    <div class="relative inline-block w-10 align-middle">
+                      <input type="checkbox" data-gamify-task="aim" data-effect="precision" data-value="10" id="switch-aim-4" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                      <label for="switch-aim-4" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function flex items-center p-2 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-hand-pointer w-6 text-center text-gray-400"></i>
+                    <p class="flex-1 text-sm ml-2">Auto pull</p>
+                    <div class="relative inline-block w-10 align-middle">
+                      <input type="checkbox" data-gamify-task="aim" data-effect="precision" data-value="12" id="switch-aim-5" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                      <label for="switch-aim-5" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function flex items-center p-2 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-water w-6 text-center text-gray-400"></i>
+                    <p class="flex-1 text-sm ml-2">Solo headshots / Anti-body</p>
+                    <div class="relative inline-block w-10 align-middle">
+                      <input type="checkbox" data-sync="quick-switch-2" data-gamify-task="aim" data-effect="precision" data-value="10" id="switch-aim-6" class="switch-bg w-6 h-6 absolute block rounded-full bg-white border-4 appearance-none cursor-pointer">
+                      <label for="switch-aim-6" class="switch-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Otimização -->
+              <div id="app-page-optimization" class="app-panel-page hidden">
+                <h2 class="bg-brand text-black inline-block text-sm font-bold p-2 rounded-lg mb-4">Optimización del juego</h2>
+
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <div class="clickable-function bg-black/20 p-2 rounded-lg cursor-pointer">
+                    <p class="font-bold">Optimizar ping</p><p class="text-gray-400">Reduce el lag.</p>
+                    <div class="text-right mt-1">
+                      <div class="relative inline-block w-8 align-middle">
+                        <input type="checkbox" data-effect="latency" data-value="-28" id="switch-opt-1" class="switch-bg w-5 h-5 absolute block rounded-full bg-white border-2 appearance-none cursor-pointer">
+                        <label for="switch-opt-1" class="switch-label block overflow-hidden h-5 rounded-full bg-gray-700 cursor-pointer"></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function bg-black/20 p-2 rounded-lg cursor-pointer">
+                    <p class="font-bold">Limpiar caché</p><p class="text-gray-400">Libera memoria.</p>
+                    <div class="text-right mt-1">
+                      <div class="relative inline-block w-8 align-middle">
+                        <input type="checkbox" id="switch-opt-2" class="switch-bg w-5 h-5 absolute block rounded-full bg-white border-2 appearance-none cursor-pointer">
+                        <label for="switch-opt-2" class="switch-label block overflow-hidden h-5 rounded-full bg-gray-700 cursor-pointer"></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function bg-black/20 p-2 rounded-lg cursor-pointer">
+                    <p class="font-bold">FPS Máximo</p><p class="text-gray-400">Juego más fluido.</p>
+                    <div class="text-right mt-1">
+                      <div class="relative inline-block w-8 align-middle">
+                        <input type="checkbox" data-sync="quick-switch-3" data-effect="fps" data-value="45" id="switch-opt-3" class="switch-bg w-5 h-5 absolute block rounded-full bg-white border-2 appearance-none cursor-pointer">
+                        <label for="switch-opt-3" class="switch-label block overflow-hidden h-5 rounded-full bg-gray-700 cursor-pointer"></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function bg-black/20 p-2 rounded-lg cursor-pointer">
+                    <p class="font-bold">Modo rendimiento</p><p class="text-gray-400">Potencia la CPU.</p>
+                    <div class="text-right mt-1">
+                      <div class="relative inline-block w-8 align-middle">
+                        <input type="checkbox" data-effect="fps" data-value="15" id="switch-opt-4" class="switch-bg w-5 h-5 absolute block rounded-full bg-white border-2 appearance-none cursor-pointer">
+                        <label for="switch-opt-4" class="switch-label block overflow-hidden h-5 rounded-full bg-gray-700 cursor-pointer"></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function bg-black/20 p-2 rounded-lg cursor-pointer">
+                    <p class="font-bold">Anti sobrecalentamiento</p><p class="text-gray-400">Enfría la CPU.</p>
+                    <div class="text-right mt-1">
+                      <div class="relative inline-block w-8 align-middle">
+                        <input type="checkbox" id="switch-opt-5" class="switch-bg w-5 h-5 absolute block rounded-full bg-white border-2 appearance-none cursor-pointer">
+                        <label for="switch-opt-5" class="switch-label block overflow-hidden h-5 rounded-full bg-gray-700 cursor-pointer"></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clickable-function bg-black/20 p-2 rounded-lg cursor-pointer">
+                    <p class="font-bold">Ahorro de batería</p><p class="text-gray-400">Mejora la duración.</p>
+                    <div class="text-right mt-1">
+                      <div class="relative inline-block w-8 align-middle">
+                        <input type="checkbox" id="switch-opt-6" class="switch-bg w-5 h-5 absolute block rounded-full bg-white border-2 appearance-none cursor-pointer">
+                        <label for="switch-opt-6" class="switch-label block overflow-hidden h-5 rounded-full bg-gray-700 cursor-pointer"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button id="apply-optimization-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold text-sm p-2 rounded-lg mt-4 transition-colors duration-300">APLICAR OPTIMIZACIONES</button>
+              </div>
+
+              <!-- IA -->
+              <div id="app-page-ia" class="app-panel-page hidden">
+                <h2 class="bg-brand text-black inline-block text-sm font-bold p-2 rounded-lg mb-4">Optimizer AI</h2>
+                <div class="space-y-4">
+                  <div>
+                    <label for="phone-model" class="block text-xs font-medium text-gray-300 mb-1">1. Modelo de tu celular:</label>
+                    <input type="text" id="phone-model" class="w-full bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus-ring-brand" placeholder="ej.: iPhone 8">
+                  </div>
+                  <div>
+                    <label for="game-mode" class="block text-xs font-medium text-gray-300 mb-1">2. ¿Tu estilo de juego?</label>
+                    <select id="game-mode" class="w-full bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-white text-sm focus-ring-brand">
+                      <option value="">Seleccionar...</option>
+                      <option value="rush">1v1 / Wagers (Rush)</option>
+                      <option value="control">Ranked (Control)</option>
+                    </select>
+                  </div>
+                  <button id="generate-config-button" class="w-full btn-brand py-2 px-3 rounded-lg transition-all duration-300">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Generar configuración
+                  </button>
+                  <div id="ai-result" class="hidden mt-4 p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-sm space-y-2"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /Painel flutuante -->
+      </div>
+    </section>
+
+    <!-- RECOMENDADA POR PERFIS VERIFICADOS -->
+    <section id="bonus-recomendados"
+             class="py-16 sm:py-20 px-4 bg-[#221d08] border-y border-[#b9982a] text-center">
+
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-teko text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white leading-tight mb-2">
+          RECOMENDADO POR <span class="text-[#FFC425]">PERFILES VERIFICADOS</span>
+        </h2>
+        <p class="text-gray-200 text-sm sm:text-base mb-8">
+          Algunos de los nombres de Free Fire que usan nuestro panel.
+        </p>
+      </div>
+
+      <div class="relative max-w-xs mx-auto">
+
+        <!-- SLIDES -->
+        <div id="slider" class="overflow-hidden rounded-xl">
+          <div class="slide active">
+            <img src="images/player-4.jpeg" class="w-full rounded-xl" alt="Marechal">
+            <p class="text-white font-semibold text-lg mt-2">Marechal</p>
+          </div>
+
+          <div class="slide">
+            <img src="images/player-3.jpeg" class="w-full rounded-xl" alt="Steike">
+            <p class="text-white font-semibold text-lg mt-2">Steike</p>
+          </div>
+
+          <div class="slide">
+            <img src="images/player-2.jpeg" class="w-full rounded-xl" alt="Fantasma">
+            <p class="text-white font-semibold text-lg mt-2">Fantasma</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="images/Design sem nome (43).png" class="w-full rounded-xl" alt="New Player">
+          <p class="text-white font-semibold text-lg mt-2">Bruce FF</p>
+        </div>
+
+        <!-- SETA ESQUERDA -->
+        <button id="prev"
+                class="absolute left-[-22px] top-1/2 -translate-y-1/2
+                       bg-black/60 text-white w-9 h-9 rounded-full flex 
+                       items-center justify-center hover:bg-black/80 transition">
+          <span class="text-lg">❮</span>
+        </button>
+
+        <!-- SETA DIREITA -->
+        <button id="next"
+                class="absolute right-[-22px] top-1/2 -translate-y-1/2
+                       bg-black/60 text-white w-9 h-9 rounded-full flex 
+                       items-center justify-center hover:bg-black/80 transition">
+          <span class="text-lg">❯</span>
+        </button>
+      </div>
+      </a>
+    </section>
+
+    <!-- FEEDBACK -->
+    <section id="feedback" class="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black">
+      <div class="absolute inset-0 z-0">
+        <img src="https://i.imgur.com/b42e8755a1fd0f7ce699f70bf8b6030a.jpg" alt="Fondo de feedback" class="w-full h-full object-cover opacity-10 ken-burns">
+        <div class="absolute inset-0 bg-black/80"></div>
+      </div>
+
+      <div class="relative max-w-7xl mx-auto z-10 reveal">
+        <div class="text-center mb-12 sm:mb-16">
+          <p class="font-teko text-2xl text-brand mb-2 uppercase tracking-widest">La escuadra no miente</p>
+          <h2 class="font-teko text-4xl sm:text-5xl md:text-6xl font-bold text-white uppercase">
+            Resultados reales, jugadores reales
+          </h2>
+          <p class="text-lg text-gray-400 max-w-3xl mx-auto mt-4">
+            Mira lo que dicen los jugadores después de activar el panel. Resultados al instante, sin humo.
+          </p>
+        </div>
+
+        <!-- CARROSSEL -->
+        <div class="relative max-w-md mx-auto">
+
+          <!-- Área visível do carrossel -->
+          <div id="feedback-slider" class="overflow-hidden rounded-xl bg-black/60 border border-gray-800">
+
+            <!-- SLIDE 1 - VÍDEO -->
+            <div class="fb-slide p-4">
+              <video class="rounded-lg mx-auto"
+                     style="width:85%;height:auto;"
+                     controls
+                     playsinline
+                     preload="metadata"
+                     poster="images/video1.png">
+                <source src="images/video3.mp4" type="video/mp4">
+                Tu navegador no soporta video.
+              </video>
+            </div>
+
+            <!-- SLIDE 2 - VÍDEO -->
+            <div class="fb-slide p-4 hidden">
+              <video class="rounded-lg mx-auto"
+                     style="width:85%;height:auto;"
+                     controls
+                     playsinline
+                     preload="metadata"
+                     poster="images/capa2.png">
+                <source src="images/video2.mp4" type="video/mp4">
+                Tu navegador no soporta video.
+              </video>
+            </div>
+
+            <!-- SLIDE 3 - VÍDEO -->
+            <div class="fb-slide p-4 hidden">
+              <video class="rounded-lg mx-auto"
+                     style="width:85%;height:auto;"
+                     controls
+                     playsinline
+                     preload="metadata"
+                     poster="images/capa3.png">
+                <source src="images/video3.mp4" type="video/mp4">
+                Tu navegador no soporta video.
+              </video>
+            </div>
+
+            <!-- SLIDE 4 - IMAGEM -->
+            <div class="fb-slide p-4 hidden">
+              <img src="images/prova2.jpeg"
+                   class="w-[85%] mx-auto h-auto rounded-lg"
+                   alt="Feedback 2">
+            </div>
+
+            <!-- SLIDE 5 - IMAGEM -->
+            <div class="fb-slide p-4 hidden">
+              <img src="images/prova3.jpeg"
+                   class="w-[85%] mx-auto h-auto rounded-lg"
+                   alt="Feedback 3">
+            </div>
+
+            <!-- SLIDE 6 - IMAGEM -->
+            <div class="fb-slide p-4 hidden">
+              <img src="images/prova1.webp" class="w-full h-auto rounded-lg" alt="Feedback 4">
+            </div>
+
+            <!-- SLIDE 7 - IMAGEM -->
+            <div class="fb-slide p-4 hidden">
+              <img src="images/prova4.webp" class="w-full h-auto rounded-lg" alt="Feedback 5">
+            </div>
+
+            <!-- SLIDE 8 - IMAGEM -->
+            <div class="fb-slide p-4 hidden">
+              <img src="images/prova6.jpg" class="w-full h-auto rounded-lg" alt="Feedback 6">
+            </div>
+
+          </div>
+
+          <!-- SETAS (apenas UMA vez) -->
+          <button id="prev-slide" class="absolute top-1/2 -left-4 md:-left-6 transform -translate-y-1/2 bg-gray-800/50 text-white p-3 rounded-full transition-all duration-300 z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button id="next-slide" class="absolute top-1/2 -right-4 md:-right-6 transform -translate-y-1/2 bg-gray-800/50 text-white p-3 rounded-full transition-all duration-300 z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+        <!-- Pontinhos embaixo (APENAS UMA VEZ) -->
+        <div id="carousel-dots" class="mt-8 text-center flex justify-center space-x-2"></div>
+
+        <div class="text-center mt-12 reveal">
+          <a href="#planos" class="inline-block btn-brand px-8 sm:px-10 py-3 sm:py-4 rounded-md text-lg sm:text-xl">
+            ESTOY LISTO PARA DOMINAR
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANOS -->
+    <section id="planos" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-black">
+      <div class="max-w-6xl mx-auto reveal">
+        <div class="text-center mb-12 sm:mb-16">
+          <p class="font-teko text-2xl text-brand mb-2 uppercase tracking-widest">Oferta exclusiva</p>
+          <h2 class="font-teko text-4xl sm:text-5xl md:text-6xl font-bold text-white uppercase">
+            Acceso desbloqueado para ti
+          </h2>
+          <p class="text-lg text-gray-400 max-w-3xl mx-auto mt-4">
+            Elige el plan que mejor encaja con tu camino al top y empieza a dominar el lobby hoy mismo.
+          </p>
+        </div>
+
+        <!-- agora só 2 colunas no desktop -->
+        <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+
+          <!-- Mensal -->
+          <div class="bg-gray-900/50 border border-gray-800 p-8 text-center h-full flex flex-col rounded-2xl"
+               data-plan-name="Plano Mensal" data-plan-value="19.90">
+            <h3 class="font-teko text-3xl sm:text-4xl font-bold text-white uppercase">Plan mensual</h3>
+            <p class="text-gray-400 mb-4">Acceso por 30 días</p>
+            <p class="font-teko text-5xl sm:text-6xl font-bold text-white mb-6">
+              R$19<span class="text-3xl text-gray-400">,90</span>
+            </p>
+            <div class="border-t border-gray-800 my-6"></div>
+
+            <ul class="space-y-4 text-gray-400 mb-8 text-left flex-grow">
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función de headshot alto</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función de headshot en el cuello</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función de headshot en el pecho</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Bypass para transmitir pantalla</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Anti-ban</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Anti-blacklist</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función Booyah en lobby</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función para llegar al top global</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función 100% headshot</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función de corrida rápida</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función para atravesar paredes</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función para matar a través del hielo</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Aimbot</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Sin retroceso</span>
+              </li>
+            </ul>
+
+           <a href="https://pay.hotmart.com/N103076399A?off=v9luecy4"
+   class="purchase-link w-full mt-auto inline-block text-center
+          bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-lg font-bold">
+  ELEGIR PLAN
+</a>
+          </div>
+
+          <!-- Permanente -->
+          <div id="vitalicio-plan-card"
+               class="bg-gradient-to-b from-[rgba(255,222,9,.15)] to-gray-900/50 border-2 border-brand
+                      p-8 text-center relative transform lg:scale-110 h-full flex flex-col rounded-2xl shadow-brand"
+               data-plan-name="Plano Permanente" data-plan-value="29.90">
+
+            <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
+              <span class="inline-block px-6 py-2 text-sm text-black bg-brand rounded-full
+                           font-bold uppercase tracking-wider shadow-lg">
+                MÁS VENDIDO
+              </span>
+            </div>
+
+            <h3 class="font-teko text-3xl sm:text-4xl font-bold text-white uppercase">Plan de por vida</h3>
+            <p class="text-brand mb-4">Pagas una vez, usas para siempre</p>
+
+            <div id="vitalicio-price-container">
+              <p class="font-teko text-5xl sm:text-6xl font-bold text-white mb-6">
+                R$29<span class="text-3xl text-brand">,90</span>
+              </p>
+            </div>
+
+            <div class="border-t" style="border-color: rgba(255,222,9,.3)"></div>
+
+            <ul class="space-y-4 text-gray-300 mb-8 text-left flex-grow mt-6">
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Todo lo del plan básico incluido</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Garantía de 30 días</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Todas las actualizaciones incluidas</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Panel freestyle</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Soporte por llamada</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Acceso de por vida</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función anti-stream-sniping</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Bypass Android/iOS</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>+30 funciones adicionales</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Panel de optimización 240 FPS</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Funciones de headshot cuello/pecho</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Función anti-ban & anti-blacklist</span>
+              </li>
+
+              <li class="flex items-center">
+                <i class="fa-solid fa-check text-brand w-5 mr-3"></i>
+                <span>Configuración fácil en 3 segundos</span>
+              </li>
+            </ul>
+
+            <a id="vitalicio-checkout-link"
+               href="https://pay.hotmart.com/N103076399A?off=64bcig4g"
+               class="purchase-link w-full mt-auto inline-block text-center btn-brand px-6 py-4 rounded-lg font-bold transform hover:scale-105">
+              ¡ACTIVAR MODO CAPUDO!
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VÍDEO MOSTRANDO O XIT NA PRÁTICA -->
+    <section class="py-12 sm:py-16 px-4 bg-black text-center">
+      <div class="max-w-3xl mx-auto">
+
+        <h2 class="font-teko text-[34px] sm:text-[42px] md:text-[50px] font-bold text-white uppercase leading-tight mb-4">
+          TU <span style="color:#FFDE09;">PANEL</span> VA A FUNCIONAR<br>
+          ASÍ DESPUÉS DEL PAGO
+        </h2>
+
+      </div>
+
+      <div class="vsl-wrap" style="margin:0 auto; max-width:420px;">
+        <iframe
+          id="panda-1d93f28b-88d4-4bf2-80b2-a68fb70e6af0"
+          src="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/?v=1d93f28b-88d4-4bf2-80b2-a68fb70e6af0"
+          style="border:none; width:100%; height:380px; border-radius:12px;"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen="true"
+          fetchpriority="high">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- POR QUE O PAINEL FFH4X OFICIAL É DIFERENCIADO? -->
+    <section id="porque-diferenciado" class="py-16 sm:py-20 px-4 bg-black">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="font-teko text-4xl sm:text-5xl md:text-6xl font-bold text-white uppercase leading-tight leading-snug text-center">
+          ¿POR QUÉ EL <span class="text-brand">PANEL FFH4X</span><br>
+          <span class="text-brand">OFICIAL</span> ES DIFERENTE?
+        </h2>
+        <p class="mt-3 text-sm sm:text-base text-gray-300">
+          Tecnología avanzada para dominar Free Fire por completo
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <!-- DESKTOP / TABLET: CARDS LADO A LADO (6 ITENS) -->
+        <div class="hidden md:grid max-w-5xl mx-auto grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- CARD 1 -->
+          <div class="bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center flex flex-col items-center">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+              <i class="fa-solid fa-shield-halved text-brand text-lg"></i>
+            </div>
+            <h3 class="font-teko text-xl text-white mb-2">Anti-ban &amp; anti-black</h3>
+            <p class="text-sm text-gray-300">
+              Juega sin miedo con nuestra tecnología avanzada de protección.
+            </p>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center flex flex-col items-center">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+              <i class="fa-solid fa-layer-group text-brand text-lg"></i>
+            </div>
+            <h3 class="font-teko text-xl text-white mb-2">Bypass incluido</h3>
+            <p class="text-sm text-gray-300">
+              Transmite tu pantalla con confianza manteniendo el panel totalmente oculto.
+            </p>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center flex flex-col items-center">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+              <i class="fa-solid fa-headset text-brand text-lg"></i>
+            </div>
+            <h3 class="font-teko text-xl text-white mb-2">Admins de confianza</h3>
+            <p class="text-sm text-gray-300">
+              Lista de administradores de confianza para jugar wagers con seguridad.
+            </p>
+          </div>
+
+          <!-- CARD 4 – Funções de 100% HS -->
+          <div class="bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center flex flex-col items-center">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+              <i class="fa-solid fa-bullseye text-brand text-lg"></i>
+            </div>
+            <h3 class="font-teko text-xl text-white mb-2">Funciones 100% HS</h3>
+            <p class="text-sm text-gray-300">
+              Múltiples funciones, desde auto headshot hasta vuelo y más.
+            </p>
+          </div>
+
+          <!-- CARD 5 – Compatível -->
+          <div class="bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center flex flex-col items-center">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+              <i class="fa-solid fa-mobile-screen-button text-brand text-lg"></i>
+            </div>
+            <h3 class="font-teko text-xl text-white mb-2">Compatible</h3>
+            <p class="text-sm text-gray-300">
+              Compatible con cualquier dispositivo, Android e iOS.
+            </p>
+          </div>
+
+          <!-- CARD 6 – Suporte Dedicado -->
+          <div class="bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center flex flex-col items-center">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+              <i class="fa-solid fa-headphones-simple text-brand text-lg"></i>
+            </div>
+            <h3 class="font-teko text-xl text-white mb-2">Soporte dedicado</h3>
+            <p class="text-sm text-gray-300">
+              Recibe soporte dedicado 24/7, incluso instalación del panel por llamada en Discord.
+            </p>
+          </div>
+        </div>
+
+        <!-- MOBILE: CARROSSEL COM 1 CARD POR VEZ -->
+        <div class="md:hidden mt-8 max-w-xs mx-auto relative">
+          <div id="why-slider" class="overflow-hidden rounded-2xl">
+            <!-- SLIDE 1 -->
+            <div class="why-card-slide bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center">
+              <div class="w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+                <i class="fa-solid fa-shield-halved text-brand text-lg"></i>
+              </div>
+              <h3 class="font-teko text-xl text-white mb-2">Anti-ban &amp; anti-black</h3>
+              <p class="text-sm text-gray-300">
+                Juega sin miedo con nuestra tecnología avanzada de protección.
+              </p>
+            </div>
+
+            <!-- SLIDE 2 -->
+            <div class="why-card-slide bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center hidden">
+              <div class="w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+                <i class="fa-solid fa-layer-group text-brand text-lg"></i>
+              </div>
+              <h3 class="font-teko text-xl text-white mb-2">Bypass incluido</h3>
+              <p class="text-sm text-gray-300">
+                Transmite tu pantalla con confianza manteniendo el panel totalmente oculto.
+              </p>
+            </div>
+
+            <!-- SLIDE 3 -->
+            <div class="why-card-slide bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center hidden">
+              <div class="w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+                <i class="fa-solid fa-headset text-brand text-lg"></i>
+              </div>
+              <h3 class="font-teko text-xl text-white mb-2">Admins de confianza</h3>
+              <p class="text-sm text-gray-300">
+                Lista de administradores de confianza para jugar wagers con seguridad.
+              </p>
+            </div>
+
+            <!-- SLIDE 4 – Funções de 100% HS -->
+            <div class="why-card-slide bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center hidden">
+              <div class="w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+                <i class="fa-solid fa-bullseye text-brand text-lg"></i>
+              </div>
+              <h3 class="font-teko text-xl text-white mb-2">Funciones 100% HS</h3>
+              <p class="text-sm text-gray-300">
+                Múltiples funciones, desde auto headshot hasta vuelo y más.
+              </p>
+            </div>
+
+            <!-- SLIDE 5 – Compatível -->
+            <div class="why-card-slide bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center hidden">
+              <div class="w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+                <i class="fa-solid fa-mobile-screen-button text-brand text-lg"></i>
+              </div>
+              <h3 class="font-teko text-xl text-white mb-2">Compatible</h3>
+              <p class="text-sm text-gray-300">
+                Compatible con cualquier dispositivo, Android e iOS.
+              </p>
+            </div>
+
+            <!-- SLIDE 6 – Suporte Dedicado -->
+            <div class="why-card-slide bg-[#0b0b0b] border border-[#b9982a] rounded-2xl px-6 py-6 text-center hidden">
+              <div class="w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-black/60 border border-[#b9982a] mb-4">
+                <i class="fa-solid fa-headphones-simple text-brand text-lg"></i>
+              </div>
+              <h3 class="font-teko text-xl text-white mb-2">Soporte dedicado</h3>
+              <p class="text-sm text-gray-300">
+                Recibe soporte dedicado 24/7, incluso instalación del panel por llamada en Discord.
+              </p>
+            </div>
+          </div>
+
+          <!-- SETAS -->
+          <button id="why-prev"
+                  class="absolute left-3 top-1/2 -translate-y-1/2
+                         w-9 h-9 rounded-full bg-black/70 border border-[#b9982a]
+                         flex items-center justify-center text-white text-lg">
+            ❮
+          </button>
+          <button id="why-next"
+                  class="absolute right-3 top-1/2 -translate-y-1/2
+                         w-9 h-9 rounded-full bg-black/70 border border-[#b9982a]
+                         flex items-center justify-center text-white text-lg">
+            ❯
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GARANTIA -->
+    <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/50 border-y border-gray-800">
+      <div class="max-w-4xl mx-auto text-center reveal">
+        <div class="relative w-32 h-32 mx-auto mb-6">
+          <svg class="absolute inset-0 w-full h-full spin-slow text-brand" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center font-teko text-white text-5xl">7</div>
+        </div>
+        <h2 class="font-teko text-4xl sm:text-5xl font-bold text-white uppercase">
+          Tu riesgo es absolutamente cero
+        </h2>
+        <p class="text-lg text-gray-400 max-w-3xl mx-auto mt-4">
+          Confiamos tanto en que nuestro Panel FFH4X va a transformar tu jugabilidad, que te damos 7 días de garantía incondicional. Si no sientes una mejora gigante en tu mira o no quedas satisfecho por cualquier motivo, solo pide el reembolso y devolvemos el 100% de tu dinero.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-black">
+      <div class="max-w-4xl mx-auto reveal">
+        <div class="text-center mb-12 sm:mb-16">
+          <p class="font-teko text-2xl text-brand mb-2 uppercase tracking-widest">Aclara tus dudas</p>
+          <h2 class="font-teko text-4xl sm:text-5xl md:text-6xl font-bold text-white uppercase">
+            Preguntas frecuentes
+          </h2>
+        </div>
+        <div id="faq-container" class="space-y-4"></div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/70">
+      <div class="absolute inset-0 z-0">
+        <img src="images/AqCgJZb.jpeg" alt="Fondo de llamada final a la acción" class="w-full h-full object-cover opacity-30 ken-burns">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black"></div>
+      </div>
+      <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
+        <h2 class="font-teko text-5xl md:text-7xl font-bold text-white uppercase">
+          ¿Listo para tener la mejor mira?
+        </h2>
+        <p class="text-lg text-gray-400 mt-4 mb-12 max-w-2xl mx-auto">
+          Deja de quedarte atrás. Date la ventaja que mereces y empieza a romper en las ranked hoy mismo.
+        </p>
+        <a href="#planos" class="inline-block btn-brand px-10 py-4 rounded-md text-xl font-bold">
+          ELEGIR MI PLAN AHORA
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-8 border-t border-gray-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+      <img src="images/Design sem nome (46).png" alt="Super Sensi Logo" class="mx-auto mb-4 h-12 w-auto">
+      <p>© 2025 HFF4X Panel. Todos los derechos reservados.</p>
+      <p class="text-xs mt-2">Este producto no está afiliado a Garena. Es una herramienta externa que mejora tu jugabilidad y no viola los términos de servicio del juego.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js" defer></script>
+
+  <!-- Anti-inspecionar / Anti-copiar (versão segura para mobile) -->
+  <script>
+  (function () {
+    const stop = (e) => { e.preventDefault(); e.stopPropagation(); return false; };
+
+    // 1) Bloqueia menu do botão direito e long-press menu padrão
+    window.addEventListener('contextmenu', stop, true);
+
+    // 2) Bloqueia combos comuns no desktop (não interfere no mobile)
+    window.addEventListener('keydown', function (e) {
+      const k = e.key;
+      const ctrl = e.ctrlKey || e.metaKey;
+      if (
+        k === 'F12' ||
+        (ctrl && ['u','s','p'].includes((k||'').toLowerCase())) ||
+        (ctrl && e.shiftKey && ['i','j','c','k'].includes((k||'').toLowerCase()))
+      ) stop(e);
+    }, true);
+
+    // 3) Imagens: desabilita arrastar e clique direito, sem bloquear toques/rolagem
+    document.querySelectorAll('img:not([data-clickable])').forEach(img => { 
+      img.setAttribute('draggable', 'false');
+      img.addEventListener('dragstart', stop, true);
+      img.addEventListener('contextmenu', stop, true);
+      // IMPORTANTE: sem 'touchstart' aqui para não travar toques no mobile
+    });
+
+    // ⚠️ REMOVIDO: heurística que apagava a página quando DevTools abre
+    // (era isso que poderia derrubar o site no mobile)
+  })();
+  </script>
+
+  <style>
+    /* Não bloqueia botões/links. Preserva toques/rolagem no mobile. */
+    * {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none; /* remove menu de toque longo no iOS/Android */
+    }
+    img:not([data-clickable]) {
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+    /* opcional: tira o highlight azul no toque (mobile) */
+    html, body { -webkit-tap-highlight-color: transparent; }
+  </style>
+
+  <style>
+    #top-header-ffh4x {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      padding: 14px 0; /* um pouco mais de respiro */
+    }
+
+    #top-header-ffh4x-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-header-logo {
+      height: 54px; /* AUMENTEI mais a logo */
+    }
+
+    .top-header-lang {
+      display: flex;
+      align-items: center;
+      gap: 14px; /* espaço um pouco maior */
+    }
+
+    .top-header-flag {
+      width: 48px;  /* bandeiras maiores ainda */
+      height: auto;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    /* BOTÃO MAIOR + MAIS ESPAÇO EM CIMA */
+    .btn-hero-adjusted {
+      padding: 16px 38px !important;    /* aumenta o botão */
+      font-size: 1.25rem !important;     /* texto maior */
+      margin-top: 22px !important;       /* afasta da imagem */
+    }
+
+    .slide {
+      display: none;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .slide.active {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+
+  <!-- HEADER FIXO LOGO + PT / ES -->
+  <div id="top-header-ffh4x">
+    <div id="top-header-ffh4x-inner">
+      <!-- LOGO -->
+      <img src="images/Design sem nome (46).png" alt="Logo" class="top-header-logo">
+
+      <!-- BOTÕES PT / ES -->
+      <div class="top-header-lang">
+        <a href="https://supersensi.shop/painelss/">
+          <img src="images/Frame-9.webp" alt="PT" class="top-header-flag">
+        </a>
+        <a href="https://supersensi.shop/panelss/">
+          <img src="images/ES (3).png" alt="ES" class="top-header-flag">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  let index = 0;
+  const slides = document.querySelectorAll(".slide");
+
+  document.getElementById("next").onclick = () => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  };
+
+  document.getElementById("prev").onclick = () => {
+    slides[index].classList.remove("active");
+    index = (index - 1 + slides.length) % slides.length;
+    slides[index].classList.add("active");
+  };
+  </script>
+
+  <style>
+    /* 🔍 Deixar as provas sociais grandes e legíveis no mobile */
+    #feedback #carousel-content {
+      padding: 0 12px;
+      align-items: stretch;
+    }
+
+    /* Cada slide ocupa 100% da largura do celular */
+    #feedback #carousel-content > div {
+      min-width: 100%;
+      max-width: 100%;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Print do Whats ocupa a largura toda do card */
+    #feedback #carousel-content img {
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 0.75rem;
+      display: block;
+    }
+
+    /* Texto um pouco maior pra leitura ficar boa */
+    #feedback #carousel-content p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* No desktop, limita pra não ficar gigante demais */
+    @media (min-width: 768px) {
+      #feedback #carousel-content > div {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Se em algum card eu tiver usado max-w-sm/w-72, força a expandir */
+    #feedback #carousel-content .max-w-sm {
+      max-width: 100% !important;
+    }
+    #feedback #carousel-content .w-72 {
+      width: 100% !important;
+    }
+  </style>
+
+  <script>
+  (function() {
+    const dominioPermitido = "supersensi.shop";
+
+    const host = window.location.hostname.replace("www.", "");
+    if (host !== dominioPermitido) {
+        document.body.innerHTML = "";
+        document.write("<h1 style='margin:50px;text-align:center;color:red;font-family:sans-serif;'></h1>");
+        return;
+    }
+
+    if (window.location.protocol === "file:") {
+        document.body.innerHTML = "<h1 style='margin:50px;text-align:center;color:red;'></h1>";
+        return;
+    }
+
+    if (window !== window.top) {
+        document.body.innerHTML = "<h1 style='margin:50px;text-align:center;color:red;'></h1>";
+        return;
+    }
+
+    let devtools = false;
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function() {
+            devtools = true;
+            throw new Error("DevTools");
+        }
+    });
+    console.log(element);
+    setInterval(() => {
+        if (devtools) {
+            document.documentElement.innerHTML = "";
+        }
+    }, 100);
+
+    if (!("querySelector" in document)) {
+        document.documentElement.innerHTML = "";
+    }
+  })();
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const slides = document.querySelectorAll('.fb-slide');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    const dotsContainer = document.getElementById('carousel-dots');
+
+    if (!slides.length || !prevBtn || !nextBtn || !dotsContainer) return;
+
+    let current = 0;
+
+    // cria os pontinhos
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-gray-600';
+      if (index === 0) dot.classList.add('bg-brand');
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = dotsContainer.querySelectorAll('button');
+
+    function updateView() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('hidden', index !== current);
+      });
+
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('bg-brand', index === current);
+        dot.classList.toggle('bg-gray-600', index !== current);
+      });
+    }
+
+    function goToSlide(index) {
+      const total = slides.length;
+      current = (index + total) % total; // volta pro último/primeiro quando passa dos limites
+      updateView();
+    }
+
+    prevBtn.addEventListener('click', () => goToSlide(current - 1));
+    nextBtn.addEventListener('click', () => goToSlide(current + 1));
+
+    // inicia certo
+    updateView();
+  });
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const slides = document.querySelectorAll('#why-slider .why-card-slide');
+    const prev   = document.getElementById('why-prev');
+    const next   = document.getElementById('why-next');
+
+    if (!slides.length || !prev || !next) return;
+
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('hidden', i !== index);
+      });
+    }
+
+    prev.addEventListener('click', function () {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    });
+
+    next.addEventListener('click', function () {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    });
+
+    // inicia no primeiro
+    showSlide(current);
+  });
+  </script>
+
+  <link rel="preload" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/css/styles.css" as="style">
+  <link rel="prerender" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/?v=be40d276-e77b-4d59-b52e-5a2b236e3b5a">
+  <link rel="preload" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/js/hls.js" as="script">
+  <link rel="preload" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/js/plyr.polyfilled.min.js" as="script">
+  <link rel="preload" href="https://config.tv.pandavideo.com.br/vz-3b3d6663-177/be40d276-e77b-4d59-b52e-5a2b236e3b5a.json" as="fetch">
+  <link rel="preload" href="https://config.tv.pandavideo.com.br/vz-3b3d6663-177/config.json" as="fetch">
+  <link rel="preload" href="https://b-vz-3b3d6663-177.tv.pandavideo.com.br/be40d276-e77b-4d59-b52e-5a2b236e3b5a/playlist.m3u8" as="fetch">
+  <link rel="dns-prefetch" href="https://b-vz-3b3d6663-177.tv.pandavideo.com.br">
+  <link rel="dns-prefetch" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br">
+  <link rel="dns-prefetch" href="https://vz-3b3d6663-177.b-cdn.net">
+
+  <link rel="preload" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/css/styles.css" as="style">
+  <link rel="prerender" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/?v=1d93f28b-88d4-4bf2-80b2-a68fb70e6af0">
+  <link rel="preload" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/js/hls.js" as="script">
+  <link rel="preload" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br/embed/js/plyr.polyfilled.min.js" as="script">
+  <link rel="preload" href="https://config.tv.pandavideo.com.br/vz-3b3d6663-177/1d93f28b-88d4-4bf2-80b2-a68fb70e6af0.json" as="fetch">
+  <link rel="preload" href="https://config.tv.pandavideo.com.br/vz-3b3d6663-177/config.json" as="fetch">
+  <link rel="preload" href="https://b-vz-3b3d6663-177.tv.pandavideo.com.br/1d93f28b-88d4-4bf2-80b2-a68fb70e6af0/playlist.m3u8" as="fetch">
+  <link rel="dns-prefetch" href="https://b-vz-3b3d6663-177.tv.pandavideo.com.br">
+  <link rel="dns-prefetch" href="https://player-vz-3b3d6663-177.tv.pandavideo.com.br">
+  <link rel="dns-prefetch" href="https://vz-3b3d6663-177.b-cdn.net">
+
+ 
+
+
+
+
+
+</body>
+</html>
