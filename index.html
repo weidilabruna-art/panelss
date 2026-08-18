@@ -1358,47 +1358,7 @@
     }
   </style>
 
-  <script>
-  (function() {
-    const dominioPermitido = "supersensi.shop";
 
-    const host = window.location.hostname.replace("www.", "");
-    if (host !== dominioPermitido) {
-        document.body.innerHTML = "";
-        document.write("<h1 style='margin:50px;text-align:center;color:red;font-family:sans-serif;'></h1>");
-        return;
-    }
-
-    if (window.location.protocol === "file:") {
-        document.body.innerHTML = "<h1 style='margin:50px;text-align:center;color:red;'></h1>";
-        return;
-    }
-
-    if (window !== window.top) {
-        document.body.innerHTML = "<h1 style='margin:50px;text-align:center;color:red;'></h1>";
-        return;
-    }
-
-    let devtools = false;
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-        get: function() {
-            devtools = true;
-            throw new Error("DevTools");
-        }
-    });
-    console.log(element);
-    setInterval(() => {
-        if (devtools) {
-            document.documentElement.innerHTML = "";
-        }
-    }, 100);
-
-    if (!("querySelector" in document)) {
-        document.documentElement.innerHTML = "";
-    }
-  })();
-  </script>
 
   <script>
   document.addEventListener('DOMContentLoaded', function () {
